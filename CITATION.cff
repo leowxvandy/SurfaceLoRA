@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the SurfaceLoRA paper."
+title: "SurfaceLoRA: Reference Implementation"
+type: software
+authors:
+  - family-names: "Authors"
+    given-names: "SurfaceLoRA"
+license: MIT
+version: 0.1.0
+preferred-citation:
+  type: article
+  title: "Vectors Are Not Neutral: Sensitive-Information Inference from Exported LLM Representations in Summarization"
+  authors:
+    - family-names: "Authors"
+      given-names: "SurfaceLoRA"

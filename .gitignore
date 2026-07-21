@@ -1,0 +1,44 @@
+# Protected runtime artifacts
+data/
+outputs/
+checkpoints/
+adapters/
+*.jsonl
+*.npy
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.parquet
+*.arrow
+*.zip
+*.tar
+*.tar.gz
+*.gz
+
+# Local configuration and credentials
+configs/*.local.yaml
+.env
+*.pem
+*.key
+
+# Python and editor artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+.DS_Store
+.idea/
+.vscode/
+
+# Notebooks are not part of this release
+*.ipynb
+.ipynb_checkpoints/

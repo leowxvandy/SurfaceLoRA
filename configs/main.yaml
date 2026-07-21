@@ -1,0 +1,74 @@
+seed: 42
+
+model:
+  name_or_path: meta-llama/Llama-3.1-8B-Instruct
+  local_files_only: false
+  dtype: bfloat16
+
+data:
+  input_path: /path/to/local/credentialed/input.jsonl
+  output_dir: /path/to/local/processed/surfacelora
+  fields:
+    group: group_id
+    source: source
+    target: target
+    sensitive_label: race
+  label_order: [WHITE, BLACK, HISPANIC, ASIAN, OTHER]
+  balanced_per_class:
+    train: 4000
+    validation: 500
+    test: 500
+
+tokenization:
+  max_prompt_length: 1024
+  max_sequence_length: 1536
+  padding_side: left
+  truncation_side: left
+
+representation:
+  target: lasttok
+  layer: -1
+
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: [q_proj, v_proj]
+
+discriminator:
+  architecture: linear
+  hidden_dim: 128
+  dropout: 0.3
+
+training:
+  max_steps: 2000
+  per_device_batch_size: 4
+  gradient_accumulation_steps: 32
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  save_every_steps: 200
+  lambda_adv: 0.02
+
+generation:
+  do_sample: false
+  max_new_tokens: 256
+  batch_size: 8
+
+probes:
+  linear_max_iter: 800
+  linear_n_jobs: 16
+  mlp_hidden_dim: 128
+  mlp_dropout: 0.3
+  mlp_learning_rate: 0.001
+  mlp_batch_size: 128
+  mlp_max_epochs: 50
+  mlp_patience: 5
+
+selection:
+  chance_accuracy: 0.20
+  lr_leakage_budget: 0.025
+
+runtime:
+  device: auto
+  allow_tf32: true
