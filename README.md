@@ -47,7 +47,7 @@ The main configuration uses `meta-llama/Llama-3.1-8B-Instruct`. Obtain model acc
 
 Clinical datasets must be obtained through their official credentialed-access channels. No clinical text, identifiers, generated summaries, representations, or trained checkpoints are distributed here.
 
-The preparation command reads a prejoined, one-row-per-note local JSONL file with this schema:
+For MIMIC-IV-Ext-BHC v1.2.0, follow Appendix D of the paper. Join the BHC file to the MIMIC-IV-Note discharge table by `note_id` to obtain `subject_id` and `hadm_id`, then join the MIMIC-IV admissions table by `hadm_id` to obtain `race`. Keep one row per `note_id` and drop rows with missing identifiers, demographics, or text. Use a stable private key for each `subject_id` as `group_id`, and map the BHC file's `input` and `target` fields to `source` and `target`. The preparation command reads the resulting local JSONL file:
 
 ```json
 {"group_id":"local-opaque-patient-key","source":"...","target":"...","race":"WHITE"}
