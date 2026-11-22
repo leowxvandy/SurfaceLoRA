@@ -1,15 +1,23 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite the SurfaceLoRA paper."
+message: "If you use SurfaceLoRA, please cite the paper below."
 title: "SurfaceLoRA: Reference Implementation"
 type: software
 authors:
-  - family-names: "Authors"
-    given-names: "SurfaceLoRA"
+  - name: "SurfaceLoRA contributors"
 license: MIT
 version: 0.1.0
+repository-code: "https://github.com/leowxvandy/SurfaceLoRA"
 preferred-citation:
   type: article
   title: "Vectors Are Not Neutral: Sensitive-Information Inference from Exported LLM Representations in Summarization"
   authors:
-    - family-names: "Authors"
-      given-names: "SurfaceLoRA"
+    - {family-names: Liu, given-names: Weixin}
+    - {family-names: Qu, given-names: Bowen}
+    - {family-names: Xiong, given-names: Juming}
+    - {family-names: Ni, given-names: Congning}
+    - {family-names: Malin, given-names: "Bradley A."}
+    - {family-names: Yin, given-names: Zhijun}
+  journal: "arXiv"
+  year: 2026
+  doi: "10.48550/arXiv.2605.26433"
+  url: "https://arxiv.org/abs/2605.26433"
