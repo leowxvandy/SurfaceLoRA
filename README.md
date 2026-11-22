@@ -105,7 +105,7 @@ python scripts/evaluate.py \
   --config configs/main.yaml \
   --representations outputs/representations/lambda-0.02-final \
   --split validation \
-  --rouge-l 14.50 \
+  --rouge-l "${VAL_ROUGE_L:?Set VAL_ROUGE_L to the measured validation ROUGE-L for this checkpoint}" \
   --step 2000 \
   --output-dir outputs/validation/lambda-0.02-final
 ```
@@ -127,22 +127,22 @@ python scripts/select_checkpoint.py \
 
 Each input JSON/CSV record must contain `checkpoint_identifier`, `split`, `representation`, `layer`, `lr_probe_accuracy`, `rougeL`, and optionally `step`.
 
-Only after selection, extract the test representation for that checkpoint and perform final probing:
+For a sweep, give each training run its own `--output-dir` and evaluate each candidate on validation using its matching adapter path, checkpoint ID, step, and measured ROUGE-L. After selection, set `SELECTED_ID` to the `checkpoint_identifier` returned by `select_checkpoint.py` and `SELECTED_ADAPTER` to the matching adapter directory. Reuse the directory containing that checkpoint's training and validation caches. With the default training output directory, the adapter for the paper's main result (`lambda_adv=0.02`, step 1200) is `outputs/surfacelora/step_1200/adapter`.
 
 ```bash
 python scripts/extract_representations.py \
   --config configs/main.yaml \
   --representation lasttok \
-  --adapter outputs/surfacelora/adapter_final \
-  --checkpoint-id lambda-0.02-final \
-  --output-dir outputs/representations/lambda-0.02-final \
+  --adapter "${SELECTED_ADAPTER:?Set SELECTED_ADAPTER}" \
+  --checkpoint-id "${SELECTED_ID:?Set SELECTED_ID}" \
+  --output-dir "outputs/representations/${SELECTED_ID}" \
   --splits test
 
 python scripts/evaluate.py \
   --config configs/main.yaml \
-  --representations outputs/representations/lambda-0.02-final \
+  --representations "outputs/representations/${SELECTED_ID}" \
   --split test \
-  --output-dir outputs/final-evaluation
+  --output-dir "outputs/final-evaluation/${SELECTED_ID}"
 ```
 
 Final mode fits independent LR and MLP probes on frozen vectors; MLP early stopping uses validation only.
